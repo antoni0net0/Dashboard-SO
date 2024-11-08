@@ -3,5 +3,5 @@
 - Monitorar e apresentar as informações do uso de memória dos processos.
 
 # Equipe
-Antonio Galvão Martins Neto
-Laís Lisboa
+- Antonio Galvão Martins Neto
+- Laís Lisboa
