@@ -31,33 +31,35 @@ def get_hardware_info():
     }
 
 def get_all_process_info():
-    return [
+    processes = [
         {
             "PID": proc.info["pid"],
             "Nome": proc.info["name"],
             "CPU (%)": proc.info["cpu_percent"],
             "Memória (%)": proc.info["memory_percent"],
+            "Status": proc.info["status"]
         }
-        for proc in psutil.process_iter(["pid", "name", "cpu_percent", "memory_percent"])
+        for proc in psutil.process_iter(["pid", "name", "cpu_percent", "memory_percent", "status"])
     ]
+    return sorted(processes, key=lambda x: x["Status"] != "sleeping")
 
 # Layout do Dashboard
 app.layout = html.Div([
     html.H1("Dashboard do Sistema Operacional", style={
-        'text-align': 'center', 'color': '#FFFFFF', 'font-family': 'Arial, sans-serif',
-        'font-size': '32px', 'margin': '20px 0', 'background-color': '#1E2A38', 'padding': '15px', 'border-radius': '8px'
+        'text-align': 'center', 'color': '#2A3B0C', 'font-family': 'Arial, sans-serif',
+        'font-size': '32px', 'margin': '20px 0', 'background-color': '#CDE67D', 'padding': '15px', 'border-radius': '8px'
     }),
 
     # Informações Globais
     html.Div([
-        html.H3("Informações do Sistema", style={'color': '#FFFFFF', 'font-size': '24px', 'margin-bottom': '10px'}),
-        html.Ul(id='system-info', style={'color': '#FFFFFF', 'font-size': '18px', 'list-style': 'none', 'padding': '0'}),
-        html.Ul(id='hardware-info', style={'color': '#FFFFFF', 'font-size': '18px', 'list-style': 'none', 'padding': '0'}),
-    ], style={'background-color': '#2E3B4E', 'padding': '20px', 'border-radius': '8px', 'margin-bottom': '20px'}),
+        html.H3("Informações do Sistema", style={'color': '#2A3B0C', 'font-size': '24px', 'margin-bottom': '10px'}),
+        html.Ul(id='system-info', style={'color': '#2A3B0C', 'font-size': '18px', 'list-style': 'none', 'padding': '0'}),
+        html.Ul(id='hardware-info', style={'color': '#2A3B0C', 'font-size': '18px', 'list-style': 'none', 'padding': '0'}),
+    ], style={'background-color': '#CDE67D', 'padding': '20px', 'border-radius': '8px', 'margin-bottom': '20px'}),
 
     # Gráficos
     html.Div([
-        html.H3("Gráficos de Uso", style={'color': '#FFFFFF', 'font-size': '24px', 'margin-bottom': '10px'}),
+        html.H3("Gráficos de Uso", style={'color': '#2A3B0C', 'font-size': '24px', 'margin-bottom': '10px'}),
         html.Div([
             html.Div([
                 dcc.Graph(id='cpu-usage', style={'height': '300px', 'width': '100%'}),
@@ -66,11 +68,11 @@ app.layout = html.Div([
                 dcc.Graph(id='disk-usage', style={'height': '300px', 'width': '100%'}),
             ], style={'flex': '1', 'margin-left': '10px'}),
         ], style={'display': 'flex', 'justify-content': 'space-between'})
-    ], style={'background-color': '#2E3B4E', 'padding': '20px', 'border-radius': '8px', 'margin-bottom': '20px'}),
+    ], style={'background-color': '#CDE67D', 'padding': '20px', 'border-radius': '8px', 'margin-bottom': '20px'}),
 
     # Selecione um Processo
     html.Div([
-        html.H3("Selecione um Processo", style={'color': '#FFFFFF', 'font-size': '24px', 'margin-bottom': '10px'}),
+        html.H3("Selecione um Processo", style={'color': '#2A3B0C', 'font-size': '24px', 'margin-bottom': '10px'}),
         dcc.Dropdown(
             id='process-selector',
             placeholder="Selecione um processo",
@@ -78,14 +80,14 @@ app.layout = html.Div([
             options=[],
             value=None
         ),
-    ], style={'background-color': '#2E3B4E', 'padding': '20px', 'border-radius': '8px', 'margin-bottom': '20px'}),
+    ], style={'background-color': '#CDE67D', 'padding': '20px', 'border-radius': '8px', 'margin-bottom': '20px'}),
 
     # Aba de Detalhes do Processo
-    html.Div(id='process-details', style={'color': '#FFFFFF', 'font-size': '18px', 'background-color': '#2E3B4E', 'padding': '20px', 'border-radius': '8px'}),
+    html.Div(id='process-details', style={'color': '#2A3B0C', 'font-size': '18px', 'background-color': '#CDE67D', 'padding': '20px', 'border-radius': '8px'}),
 
     # Intervalo de Atualização
     dcc.Interval(id='update-interval', interval=5000, n_intervals=0)
-], style={'background-color': '#1E2A38', 'padding': '30px', 'font-family': 'Arial, sans-serif', 'min-height': '100vh'})
+], style={'background-color': '#AEDE3C', 'padding': '30px', 'font-family': 'Arial, sans-serif', 'min-height': '100vh'})
 
 # Callbacks
 @app.callback(
@@ -147,7 +149,7 @@ def update_process_details(pid):
                 html.Li(f"CPU: {proc.cpu_percent(interval=0.1)}%"),
                 html.Li(f"Memória: {round(proc.memory_info().rss / 1e6, 2)} MB"),
             ]
-            return html.Ul(details, style={'color': '#FFFFFF'})
+            return html.Ul(details, style={'color': '#2A3B0C'})
         except psutil.NoSuchProcess:
             return "Processo não encontrado."
     return "Selecione um processo para ver os detalhes."
