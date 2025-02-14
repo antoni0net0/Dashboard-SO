@@ -255,6 +255,7 @@ def update_graphs(_):
             title="Uso de Memória (%)",
             xaxis={'title': 'Memória'},
             yaxis={'title': 'Uso (%)'}
+            
         )
     }
 
