@@ -1,29 +1,28 @@
-# Linux Process & Resource Dashboard
+# Linux Process Dashboard
 
-A real-time system monitoring dashboard built with **Python, Dash and Plotly**. The application reads Linux `/proc` data directly to display active processes, CPU usage and memory consumption in a web interface.
+Dashboard de monitoramento em tempo real para Linux, desenvolvido com Python, Dash e Plotly. A aplicação lê diretamente dados do pseudo-sistema de arquivos `/proc` para exibir processos ativos, uso de CPU e consumo de memória.
 
-## Features
+## Principais recursos
 
-- Lists active Linux processes
-- Displays PID, process name, CPU time and memory usage
-- Real-time CPU usage gauge
-- Real-time memory usage gauge
-- Sort processes by PID, CPU or memory
-- Background data collection with threads
-- Automatic dashboard refresh every 5 seconds
-- MVC-inspired separation between model, controller and view
+- Listagem de processos ativos
+- Exibição de PID, nome do processo, uso de CPU e memória
+- Indicadores de CPU e memória em tempo real
+- Ordenação por PID, CPU ou memória
+- Coleta de dados em threads de background
+- Atualização automática da interface a cada 5 segundos
+- Separação inspirada em MVC entre model, controller e view
 
-## How It Works
+## Como funciona
 
-The dashboard collects operating-system information directly from Linux pseudo-filesystems:
+O dashboard coleta informações diretamente do Linux:
 
-- `/proc/<pid>/stat` for process information
-- `/proc/stat` for CPU statistics
-- `/proc/meminfo` for memory statistics
+- `/proc/<pid>/stat` para dados dos processos
+- `/proc/stat` para estatísticas de CPU
+- `/proc/meminfo` para informações de memória
 
-The data collection runs in background threads, while Dash callbacks update the web interface periodically.
+A coleta acontece em threads de background, enquanto callbacks do Dash atualizam a interface periodicamente.
 
-## Architecture
+## Arquitetura
 
 ```text
 Linux /proc
@@ -33,14 +32,14 @@ SystemModel
     |
     v
 SystemController
-(background threads)
+  (threads)
     |
     v
 SystemView
 (Dash + Plotly)
     |
     v
-Browser Dashboard
+Navegador
 ```
 
 ## Tech Stack
@@ -49,31 +48,31 @@ Browser Dashboard
 - Dash
 - Plotly
 - Linux `/proc`
-- Threading
+- Multithreading
 
-## Running Locally
+## Execução local
 
-This project is designed for **Linux**, since it reads data directly from `/proc`.
+O projeto foi desenvolvido para Linux, pois depende diretamente de `/proc`.
 
-Install the dependencies:
+Instale as dependências:
 
 ```bash
 pip install dash plotly
 ```
 
-Run the application:
+Execute:
 
 ```bash
 python dashboard.py
 ```
 
-Then open the local Dash address shown in the terminal, typically:
+Depois acesse o endereço local exibido pelo Dash, normalmente:
 
 ```text
 http://127.0.0.1:8050
 ```
 
-## Project Structure
+## Estrutura
 
 ```text
 Dashboard-SO/
@@ -83,11 +82,8 @@ Dashboard-SO/
 └── README.md
 ```
 
-## Academic Context
+## Contexto acadêmico
 
-Developed as an operating-systems project focused on process monitoring and resource visualization.
+Projeto desenvolvido na área de Sistemas Operacionais com foco em monitoramento de processos e visualização de recursos do sistema.
 
-### Team
-
-- Antonio Galvão Martins Neto
-- Laís Lisboa
+**Equipe:** Antonio Galvão Martins Neto e Laís Lisboa.
